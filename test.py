@@ -24,21 +24,7 @@ testsourcetorch = source(TESTSIZE)
 testsource = testsourcetorch.numpy()
 testtarget = target(TESTSIZE).numpy()
 
-mlp = utils.MLP([1] + [32]*3 + [1], [nn.ReLU()]*3 + [nn.Sigmoid()])
-
-# # p : predicted labels
-# # q : true labels
-def loss( p , q ):
-  notp = 1.0 - p
-  notq = 1.0 - q
-  loglike = q * torch.log(p) + notq * torch.log(notp)
-  return - torch.mean(loglike)
-
-
-def reweight( nn , sources ):
-  p = nn(sources)
-  return (1 - p) / p
-
+mlp = utils.MLP([1] + [32]*3, [nn.ReLU()]*3)
 
 optimizer = torch.optim.AdamW(mlp.parameters(), lr=LR)
 
@@ -65,7 +51,7 @@ while 1:
 
     outputs = mlp(inputs)
 
-    l = loss(outputs, labels)
+    l = utils.loss(outputs, labels)
     l.backward()
 
     optimizer.step()
@@ -79,7 +65,7 @@ while 1:
 
   fig.clf()
   plt = fig.add_subplot(111)
-  weights = reweight(mlp , testsourcetorch).detach().numpy()
+  weights = utils.reweight(mlp , testsourcetorch).detach().numpy()
 
   binning = numpy.mgrid[-3:4:28j]
   hsource = cpplot.hist(testsource, binning, normalized=True)
