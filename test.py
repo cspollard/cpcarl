@@ -1,4 +1,4 @@
-import src.utils as utils
+import cpcarl.utils as utils
 import torch
 nn = torch.nn
 

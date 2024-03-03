@@ -1,6 +1,4 @@
 torch
 numpy
-scipy
 matplotlib
-einops
 cpplot @ git+https://github.com/cspollard/cpplot@bd79f7986cf901dc5f3eab32a31e4e033d853343
