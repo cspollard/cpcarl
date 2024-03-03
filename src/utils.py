@@ -16,7 +16,6 @@ def batch( features , batchsize ):
   return features[idxs]
 
 
-
 def MLP \
   ( features : list[ int ]
   , activations : list[ nn.Module ]
@@ -37,8 +36,8 @@ def MLP \
   return nn.Sequential(*layers)
 
 
-# # p : predicted labels
-# # q : true labels
+# p : predicted labels
+# q : true labels
 def loss( p , q ):
   notp = 1.0 - p
   notq = 1.0 - q
